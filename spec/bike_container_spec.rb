@@ -33,13 +33,17 @@ class ContainerHolder; include BikeContainer; end
       expect(holder.full?).to be(true)
     end
 
-    # it 'should not accept a bike if its full' do
-    #   fill_station
-    #   expect(lambda { holder.dock(bike) }).to raise_error(RuntimeError, 'station is full')
-    # end
-    #
-    # it 'should provide a list of working bikes' do
-    #
-    # end
+    it 'should not accept a bike if its full' do
+      fill_station
+      expect(lambda { holder.dock(bike) }).to raise_error(RuntimeError, 'station is full')
+    end
+    
+    it 'should provide a list of working bikes' do
+      working_bike, broken_bike = Bike.new, Bike.new
+      broken_bike.break!
+      holder.dock(broken_bike)
+      holder.dock(working_bike)
+      expect(holder.available_bikes).to eq([working_bike])
+    end
 
   end
