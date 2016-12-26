@@ -3,42 +3,10 @@ require 'bike_container.rb'
 
 describe DockingStation do
 
-  let(:bike) { Bike.new }
-  let(:station) { DockingStation.new(capacity: 20) }
+  let(:station) { DockingStation.new(capacity:123) }
 
-  def fill_station
-    20.times { station.dock(Bike.new) }
-  end
-
-  it 'should accept a bike' do
-    expect(station.bike_count).to eq(0)
-    station.dock(bike)
-    expect(station.bike_count).to eq(1)
-  end
-
-  it 'should be able to release a bike' do
-    station.dock(bike)
-    station.release(bike)
-    expect(station.bike_count).to eq(0)
-  end
-
-  it 'should know when its full' do
-    expect(station.full?).to eq(false)
-    fill_station
-    expect(station.full?).to eq(true)
-  end
-
-  it 'should not accept a bike if it is full' do
-    fill_station
-    expect(lambda { station.dock(bike) }).to raise_error(RuntimeError, 'station is full')
-  end
-
-  it 'should provide a list of working bikes' do
-    working_bike, broken_bike = Bike.new, Bike.new
-    broken_bike.break!
-    station.dock(broken_bike)
-    station.dock(working_bike)
-    expect(station.available_bikes).to eq([working_bike])
+  it 'should allow the setting of capacity' do
+    expect(station.capacity).to eq(123)
   end
 
 end
